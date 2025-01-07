@@ -3,6 +3,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Header from "@/components/header";
 import Main from "@/components/Main";
 import BlogCard from "@/components/blog-card";
+import Footer from "@/components/footer";
+import Link from 'next/link';
+import CareerSection from '@/components/career-section'
+import ClientStoriesSection from '@/components/client-stories-section'
+import NewsSection from '@/components/news-section'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +21,7 @@ const geistMono = Geist_Mono({
 
 export default function Home() {
   return (
-    <div>
+    <main>
       <Header/>
       <Main/>
       <section className="w-full flex justify-center items-center py-16">
@@ -153,6 +158,43 @@ year.</h2>
           </div>
         </div>
       </section>
+      <div className="relative h-[600px] w-full">
+      {/* Dark overlay with gradient */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent z-10"></div>
+      
+      {/* Background image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1664575600796-ffa828c5cb6e?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`
+        }}
+      ></div>
+
+      {/* Content */}
+      <div className="relative z-20 container mx-auto px-4 h-full flex items-center">
+        <div className="max-w-2xl text-white">
+          <h1 className="text-5xl md:text-6xl font-bold mb-4">
+            Transition to ISO/IEC
+            <span className="block mt-2">27001:2022</span>
+          </h1>
+          
+          <Link 
+            href="/know-more" 
+            className="inline-block mt-8 px-8 py-3 bg-white text-black font-medium 
+                     hover:bg-gray-100 transition-colors duration-300"
+          >
+            Know more
+          </Link>
+        </div>
+      </div>
     </div>
+
+    <CareerSection />
+    <ClientStoriesSection />
+    <NewsSection />
+      
+      <Footer/>
+     
+    </main>
   );
 }
