@@ -9,9 +9,20 @@
   --font-jetbrains-mono: var(--font-jetbrains-mono);
 }
 
+@layer base {
+  body {
+    @apply bg-white text-black font-sans;
+  }
+}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .container {
+    @apply w-[90%] md:w-[75%] mx-auto;
+  }
+}
+
+@layer utilities {
+  .tilt-effect {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
 }
