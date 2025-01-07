@@ -4,6 +4,7 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 import Link from 'next/link'
 import Image from 'next/image'
+import MobileNav from '@/components/mobile-nav'
 
 const CareersPage = () => {
   return (
@@ -153,6 +154,8 @@ const CareersPage = () => {
       </main>
 
       <Footer />
+
+      <MobileNav />
     </>
   )
 }

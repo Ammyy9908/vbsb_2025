@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Head from 'next/head'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
+import MobileNav from '@/components/mobile-nav'
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -219,6 +220,8 @@ const ContactPage = () => {
         </div>
       </div>
       <Footer />
+
+      <MobileNav />
     </>
   )
 }

@@ -26,3 +26,16 @@
     @apply transition-transform duration-300 hover:scale-105;
   }
 }
+
+@supports(padding: max(0px)) {
+  .h-safe-area {
+    height: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+/* Add padding to main content to prevent overlap with mobile nav */
+@media (max-width: 768px) {
+  main {
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+  }
+}

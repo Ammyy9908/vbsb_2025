@@ -3,6 +3,7 @@ import Head from 'next/head'
 import styles from './About.module.css'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
+import MobileNav from '@/components/mobile-nav'
 
 const AboutPage = () => {
   return (
@@ -93,6 +94,7 @@ const AboutPage = () => {
         </section>
       </div>
       <Footer />
+      <MobileNav />
     </>
   )
 }

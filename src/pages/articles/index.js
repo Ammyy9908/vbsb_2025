@@ -5,6 +5,7 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 import SEO from '@/components/seo'
 import TabNavigation from '@/components/tab-navigation'
+import MobileNav from '@/components/mobile-nav'
 
 const ARTICLES_PER_PAGE = 9
 
@@ -154,6 +155,8 @@ export default function ArticlesPage() {
         </main>
 
         <Footer />
+
+        <MobileNav />
       </div>
     </>
   )

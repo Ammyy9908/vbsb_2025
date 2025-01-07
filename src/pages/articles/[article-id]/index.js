@@ -7,6 +7,8 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 import SEO from '@/components/seo'
 import ArticleJsonLd from '@/components/seo/ArticleJsonLd'
+import BookmarkButton from '../../../components/BookmarkButton'
+import MobileNav from '@/components/mobile-nav'
 
 function ArticleDetailSkeleton() {
   return (
@@ -110,17 +112,18 @@ export default function ArticleDetail() {
       <div className="min-h-screen bg-gray-50">
         <Header />
         {/* Article Header */}
-        <header className="bg-white border-b">
+        <header className="bg-white border-b relative">
           <div className="container mx-auto px-4 py-8">
+            <div className="flex items-center justify-between mb-4">
+              <h1 className="text-4xl font-bold">{article.title}</h1>
+              <BookmarkButton articleId={article.id} />
+            </div>
             <div className="max-w-4xl mx-auto">
               <div className="mb-6">
                 <span className="inline-block bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-medium">
                   {article.category}
                 </span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                {article.title}
-              </h1>
               <div className="flex items-center text-gray-600 text-sm">
                 <span>{article.date}</span>
                 <span className="mx-2">•</span>
@@ -178,6 +181,7 @@ export default function ArticleDetail() {
           </div>
         </main>
         <Footer/>
+        <MobileNav />
       </div>
     </>
   )

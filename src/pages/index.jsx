@@ -9,6 +9,7 @@ import ClientStoriesSection from '@/components/client-stories-section'
 import NewsSection from '@/components/news-section'
 import { useState } from "react";
 import SEO from '@/components/seo'
+import MobileNav from "@/components/mobile-nav";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -191,9 +192,10 @@ year.</h2>
 
       <CareerSection />
       <ClientStoriesSection />
-     
+      <MobileNav activePage="home" />
         
         <Footer/>
+
        
       </main>
     </>
