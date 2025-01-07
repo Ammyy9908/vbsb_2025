@@ -46,29 +46,39 @@ function NewsSection() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [activeTab, setActiveTab] = useState('Featured')
+  const [fetchedData, setFetchedData] = useState(false)
 
   useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        setLoading(true)
-        const fetchedArticles = await getArticles()
-        if (!fetchedArticles || fetchedArticles.length === 0) {
-          setError('No articles found')
+    if (!fetchedData) {
+      const fetchArticles = async () => {
+        try {
+          setLoading(true)
+          const fetchedArticles = await getArticles()
+          if (!fetchedArticles || fetchedArticles.length === 0) {
+            setError('No articles found')
+            return
+          }
+          
+          setTimeout(() => {
+            setArticles(fetchedArticles)
+            setLoading(false)
+          }, 1000)
+        } catch (err) {
+          setError(err.message || 'Error loading articles')
           setLoading(false)
-          return
+        } finally {
+          setFetchedData(true)
         }
-        setTimeout(() => {
-          setArticles(fetchedArticles)
-          setLoading(false)
-        }, 3000)
-      } catch (err) {
-        setError(err.message || 'Error loading articles')
-        setLoading(false)
       }
-    }
 
-    fetchArticles()
-  }, [])
+      fetchArticles()
+    }
+  }, [fetchedData])
+
+  const filteredArticles = articles.filter(article => {
+    if (activeTab === 'Featured') return true
+    return article.category === activeTab
+  })
 
   if (error) {
     return (
@@ -81,12 +91,6 @@ function NewsSection() {
       </section>
     )
   }
-
-  // Filter articles based on active tab
-  const filteredArticles = articles.filter(article => {
-    if (activeTab === 'Featured') return true
-    return article.category === activeTab
-  })
 
   return (
     <section className="py-16 px-4 md:px-8 bg-gray-50">

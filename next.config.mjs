@@ -4,9 +4,6 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com', 'images.ctfassets.net'],
   },
-  output: 'standalone',
-  poweredByHeader: false,
-  generateEtags: false,
 }
 
 export default nextConfig

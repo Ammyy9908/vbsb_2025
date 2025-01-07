@@ -19,7 +19,7 @@ function Header() {
     <div className='w-full'>
    <div className='bg-white w-full py-6 sticky top-0 z-50 shadow-md bg-opacity-50 backdrop-blur-sm'>
      <div className='flex justify-between items-center w-[85%] mx-auto'>
-        <a href="#" className='text-lg font-bold'>
+        <a href="/" className='text-lg font-bold'>
             <span>VBSB</span>
         </a>
         <button className='md:hidden text-black font-bold text-xl' onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <MdClose /> : <MdOutlineMenu />}</button>
