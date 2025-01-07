@@ -122,7 +122,7 @@ function NewsSection() {
         {/* View All Link */}
         <div className="mt-8 text-right">
           <Link 
-            href="/news" 
+            href="/articles"
             className="text-red-600 hover:text-red-700 inline-flex items-center gap-2"
           >
             View all

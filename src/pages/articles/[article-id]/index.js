@@ -5,6 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
+import SEO from '@/components/seo'
+import ArticleJsonLd from '@/components/seo/ArticleJsonLd'
 
 function ArticleDetailSkeleton() {
   return (
@@ -96,77 +98,87 @@ export default function ArticleDetail() {
   if (!article) return null
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <SEO 
+        title={`${article.title} | VBSB`}
+        description={article.description}
+        image={article.image}
+        type="article"
+      >
+        <ArticleJsonLd article={article} />
+      </SEO>
+      <div className="min-h-screen bg-gray-50">
         <Header />
-      {/* Article Header */}
-      <header className="bg-white border-b">
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-6">
-              <span className="inline-block bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-medium">
-                {article.category}
-              </span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              {article.title}
-            </h1>
-            <div className="flex items-center text-gray-600 text-sm">
-              <span>{article.date}</span>
-              <span className="mx-2">•</span>
-              <span>{article.readTime} min read</span>
+        {/* Article Header */}
+        <header className="bg-white border-b">
+          <div className="container mx-auto px-4 py-8">
+            <div className="max-w-4xl mx-auto">
+              <div className="mb-6">
+                <span className="inline-block bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-medium">
+                  {article.category}
+                </span>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                {article.title}
+              </h1>
+              <div className="flex items-center text-gray-600 text-sm">
+                <span>{article.date}</span>
+                <span className="mx-2">•</span>
+                <span>{article.readTime} min read</span>
+              </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      {/* Article Content */}
-      <main className="py-12">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            {/* Featured Image */}
-            <div className="relative w-full h-[400px] mb-8 rounded-lg overflow-hidden">
-              <Image
-                src={article.image}
-                alt={article.title}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
+        {/* Article Content */}
+        <main className="py-12">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              {/* Featured Image */}
+              <div className="relative w-full h-[400px] mb-8 rounded-lg overflow-hidden">
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
 
-            {/* Article Description */}
-            <div className="prose max-w-none">
-              <p className="text-lg text-gray-700 leading-relaxed">
-                {article.description}
-              </p>
-            </div>
+              {/* Article Description */}
+              <div className="prose max-w-none">
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  {article.description}
+                </p>
+              </div>
 
-            {/* Back to Articles */}
-            <div className="mt-12 border-t pt-8">
-              <Link 
-                href="/" 
-                className="text-red-600 hover:text-red-700 inline-flex items-center gap-2"
-              >
-                <svg 
-                  className="w-4 h-4 rotate-180" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
+              {/* Back to Articles */}
+              <div className="mt-12 border-t pt-8">
+                <Link 
+                  href="/" 
+                  className="text-red-600 hover:text-red-700 inline-flex items-center gap-2"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-                Back to Articles
-              </Link>
+                  <svg 
+                    className="w-4 h-4 rotate-180" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                  Back to Articles
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </main>
-      <Footer/>
-    </div>
+        </main>
+        <Footer/>
+      </div>
+    </>
   )
 }

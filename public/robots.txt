@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vbsb.vercel.app/sitemap.xml 
