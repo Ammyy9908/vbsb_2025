@@ -1,18 +1,32 @@
 import { createClient } from 'contentful'
 
-if (!process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID || !process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN) {
-  throw new Error(
-    'Please provide required Contentful environment variables. Check README.md for more info.'
-  )
-}
+// Move the client creation into a function to handle SSR/SSG scenarios
+const getContentfulClient = () => {
+  // Check if we're in a browser environment
+  if (typeof window === 'undefined') {
+    // Server-side: Throw error only if env vars are missing in production
+    if (process.env.NODE_ENV === 'production' && 
+        (!process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID || !process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN)) {
+      console.error('Missing Contentful environment variables')
+      return null
+    }
+  }
 
-const client = createClient({
-  space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
-  accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
-})
+  return createClient({
+    space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
+    accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
+  })
+}
 
 export const getArticles = async () => {
   try {
+    const client = getContentfulClient()
+    
+    if (!client) {
+      console.error('Contentful client not initialized')
+      return []
+    }
+
     const response = await client.getEntries({
       content_type: 'vbsbArtciles',
       include: 2,
@@ -39,11 +53,17 @@ export const getArticles = async () => {
   }
 }
 
-// Optional: Add a function to fetch a single article
 export const getArticle = async (id) => {
   try {
+    const client = getContentfulClient()
+    
+    if (!client) {
+      console.error('Contentful client not initialized')
+      return null
+    }
+
     const response = await client.getEntry(id, {
-      include: 2, // Include linked assets
+      include: 2,
     })
 
     return {
@@ -59,7 +79,7 @@ export const getArticle = async (id) => {
         month: 'short',
         year: 'numeric'
       }).toUpperCase(),
-      category: 'Article',
+      category: response.fields.category || 'Article',
     }
   } catch (error) {
     console.error('Error fetching article:', error)

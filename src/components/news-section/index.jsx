@@ -44,20 +44,43 @@ function SkeletonCard() {
 function NewsSection() {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [activeTab, setActiveTab] = useState('Featured')
 
   useEffect(() => {
     const fetchArticles = async () => {
-      setLoading(true)
-      const fetchedArticles = await getArticles()
-      setTimeout(() => {
-        setArticles(fetchedArticles)
+      try {
+        setLoading(true)
+        const fetchedArticles = await getArticles()
+        if (!fetchedArticles || fetchedArticles.length === 0) {
+          setError('No articles found')
+          setLoading(false)
+          return
+        }
+        setTimeout(() => {
+          setArticles(fetchedArticles)
+          setLoading(false)
+        }, 3000)
+      } catch (err) {
+        setError(err.message || 'Error loading articles')
         setLoading(false)
-      }, 3000) // Added 3 seconds delay for skeleton loader
+      }
     }
 
     fetchArticles()
   }, [])
+
+  if (error) {
+    return (
+      <section className="py-16 px-4 md:px-8 bg-gray-50">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center text-gray-600">
+            {error}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   // Filter articles based on active tab
   const filteredArticles = articles.filter(article => {
