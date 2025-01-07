@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import Header from "@/components/header";
 import Main from "@/components/Main";
 import Footer from "@/components/footer";
@@ -8,13 +8,13 @@ import CareerSection from '@/components/career-section'
 import ClientStoriesSection from '@/components/client-stories-section'
 import NewsSection from '@/components/news-section'
 import { useState } from "react";
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 });
 
@@ -26,7 +26,7 @@ export default function Home() {
 
   // console.log(articles)
   return (
-    <main>
+    <main className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <Header/>
       <Main/>
       <section className="w-full flex justify-center items-center py-16">
