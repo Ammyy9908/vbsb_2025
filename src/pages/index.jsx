@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
 import Header from "@/components/header";
 import Main from "@/components/Main";
 import Footer from "@/components/footer";
@@ -9,15 +8,7 @@ import CareerSection from '@/components/career-section'
 import ClientStoriesSection from '@/components/client-stories-section'
 import NewsSection from '@/components/news-section'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export default function Home() {
   return (
