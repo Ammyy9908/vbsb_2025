@@ -61,7 +61,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* <NewsSection /> */}
+      <NewsSection />
       {/* <section className="blogs-container bg-gray-100 py-16">
         <div className="w-[90%] md:w-[75%] mx-auto">
           <div>
