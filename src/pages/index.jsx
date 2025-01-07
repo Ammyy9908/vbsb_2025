@@ -8,6 +8,8 @@ import Link from 'next/link';
 import CareerSection from '@/components/career-section'
 import ClientStoriesSection from '@/components/client-stories-section'
 import NewsSection from '@/components/news-section'
+import ArticleCard from "@/components/article-card";
+import TabNavigation from "@/components/tab-navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,23 +60,17 @@ export default function Home() {
             <div>
           <h3 className="text-3xl font-bold">Latest insights,reports and more.</h3>
           </div>
-          <div className="tabs-container mt-6">
-            <ul className="flex  items-center gap-2">
-              <li className="text-lg font-medium px-2 py-2 rounded-full bg-white cursor-pointer hover:bg-purple-600 hover:text-white">Featured</li>
-              <li className="text-lg font-medium px-2 py-2 rounded-full bg-white cursor-pointer hover:bg-purple-600 hover:text-white">Articles</li>
-              <li className="text-lg font-medium px-2 py-2 rounded-full bg-white cursor-pointer hover:bg-purple-600 hover:text-white">Case Studies</li>
-            </ul>
-          </div>
+          <TabNavigation/>
           </div>
           <div className="blog-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
-          <BlogCard/>
-                <BlogCard/>
-                <BlogCard/>
-                <BlogCard/>
-                <BlogCard/>
-                <BlogCard/>
-           
+          <ArticleCard/>
+          <ArticleCard/>
+          <ArticleCard/>
+          <ArticleCard/>
+          <ArticleCard/>
+          <ArticleCard/>
           </div>
+         
           <div className="flex justify-center items-center mt-12">
             <button className="bg-purple-600 text-white px-4 py-2 rounded-full">Load More</button>
           </div>
