@@ -10,7 +10,8 @@ import ClientStoriesSection from '@/components/client-stories-section'
 import NewsSection from '@/components/news-section'
 import ArticleCard from "@/components/article-card";
 import TabNavigation from "@/components/tab-navigation";
-
+import { getArticles } from '@/services/contentful'
+import { useEffect, useState } from "react";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -22,6 +23,12 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
+  const [articles, setArticles] = useState([])
+  useEffect(() => {
+    getArticles().then((articles) => setArticles(articles))
+  }, [])
+
+  console.log(articles)
   return (
     <main>
       <Header/>
@@ -54,7 +61,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="blogs-container bg-gray-100 py-16">
+      <NewsSection />
+      {/* <section className="blogs-container bg-gray-100 py-16">
         <div className="w-[90%] md:w-[75%] mx-auto">
           <div>
             <div>
@@ -63,12 +71,9 @@ export default function Home() {
           <TabNavigation/>
           </div>
           <div className="blog-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
-          <ArticleCard/>
-          <ArticleCard/>
-          <ArticleCard/>
-          <ArticleCard/>
-          <ArticleCard/>
-          <ArticleCard/>
+          {articles.map((article) => (
+            <ArticleCard key={article.id} {...article} />
+          ))}
           </div>
          
           <div className="flex justify-center items-center mt-12">
@@ -77,7 +82,7 @@ export default function Home() {
         
         </div>
        
-      </section>
+      </section> */}
       <section className="w-full flex justify-center items-center relative h-[600px]">
         <img src="https://images.unsplash.com/photo-1665686310429-ee43624978fa?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className="w-full h-full object-cover" />
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
@@ -187,7 +192,7 @@ year.</h2>
 
     <CareerSection />
     <ClientStoriesSection />
-    <NewsSection />
+   
       
       <Footer/>
      

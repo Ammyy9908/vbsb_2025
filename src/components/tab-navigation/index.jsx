@@ -1,9 +1,6 @@
-import React, { useState } from 'react'
-import Link from 'next/link'
+import React from 'react'
 
-function TabNavigation() {
-  const [activeTab, setActiveTab] = useState('Featured')
-
+function TabNavigation({ activeTab, onTabChange }) {
   const tabs = [
     'Featured',
     'Articles',
@@ -20,7 +17,7 @@ function TabNavigation() {
           {tabs.map((tab) => (
             <li key={tab}>
               <button
-                onClick={() => setActiveTab(tab)}
+                onClick={() => onTabChange(tab)}
                 className={`
                   relative py-4 text-sm font-medium transition-colors
                   ${activeTab === tab 
