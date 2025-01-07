@@ -74,9 +74,9 @@ function MobileNav() {
 
             {/* Jobs */}
             <Link 
-              href="/jobs" 
+              href="/careers" 
               className={`flex flex-col items-center ${
-                isActive('/jobs') ? 'text-purple-600' : 'text-gray-600'
+                isActive('/careers') ? 'text-purple-600' : 'text-gray-600'
               }`}
             >
               <IoBriefcaseOutline/>
