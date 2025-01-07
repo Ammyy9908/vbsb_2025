@@ -2,7 +2,7 @@ const contentful = require('contentful-management')
 
 // Initialize the Contentful Management Client
 const client = contentful.createClient({
-  accessToken: process.env.PUBLIC_CONTENTFUL_ACCESS_TOKEN
+  accessToken: 'CFPAT-rHaL368GHNfeqYDqVVkRIAJcm5PkxNdgfv6-APTRlQc'
 })
 
 // Helper function to truncate text
@@ -11,48 +11,61 @@ function truncateText(text, maxLength) {
   return text.substring(0, maxLength - 3) + '...'
 }
 
+// Add a fallback image URL
+const FALLBACK_IMAGE = 'https://picsum.photos/800/600'
+
+// Updated image validation function
+async function validateImage(url) {
+  try {
+    const response = await fetch(url)
+    return response.ok
+  } catch (error) {
+    return false
+  }
+}
+
 // Sample article data with categories
 const articles = [
   {
-    title: "Navigating market volatility and government support for Indian agriculture",
-    description: "India's agricultural sector, the backbone of the nation's economy, contributes ~17% to the GDP and employs over half of the workforce.",
-    image: "https://images.unsplash.com/photo-1628352081506-83c43123ed6d",
+    title: "The Impact of Artificial Intelligence on Modern Society",
+    description: "Exploring the benefits and challenges of AI in today's world.",
+    image: "https://picsum.photos/800/600?random=1",
     category: "Featured"
   },
   {
-    title: "Digital transformation in financial services",
-    description: "Exploring the latest technological advancements and regulatory challenges in the financial sector.",
-    image: "https://images.unsplash.com/photo-1621460249485-4e4f92c9de5d",
+    title: "Sustainable Energy Solutions for a Greener Future",
+    description: "Discovering innovative ways to reduce our carbon footprint and promote renewable energy.",
+    image: "https://picsum.photos/800/600?random=2",
     category: "Case Study"
   },
   {
-    title: "ESG Implementation Guide",
-    description: "A comprehensive guide to implementing Environmental, Social, and Governance principles in your organization.",
-    image: "https://images.unsplash.com/photo-1664575600796-ffa828c5cb6c",
+    title: "The Rise of E-commerce: Trends and Insights",
+    description: "Analyzing the growth of online shopping and its impact on the retail industry.",
+    image: "https://images.unsplash.com/photo-1562157873-818477cd6a0b",
     category: "Thought leadership"
   },
   {
-    title: "Monthly Financial Insights",
-    description: "Stay updated with the latest trends and analysis in the financial markets.",
-    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3",
+    title: "Cybersecurity Threats in the Digital Age",
+    description: "Understanding the risks and consequences of cyber attacks in today's digital landscape.",
+    image: "https://images.unsplash.com/photo-1585829365295-ab7cd1f3c5e9",
     category: "Newsletters"
   },
   {
-    title: "Cybersecurity in the Digital Age",
-    description: "Protecting your business from the evolving threats of cyber attacks.",
-    image: "https://images.unsplash.com/photo-1621460249485-4e4f92c9de5d",
+    title: "The Future of Work: Embracing Automation and AI",
+    description: "Examining the role of technology in shaping the modern workforce.",
+    image: "https://images.unsplash.com/photo-1573497494435-7e2f4f9ac044",
     category: "Articles"
   },
   {
-    title: "The Future of Work",
-    description: "How automation and AI are reshaping the workforce and the economy.",
-    image: "https://images.unsplash.com/photo-1628352081506-83c43123ed6d",
+    title: "Climate Change: Causes, Effects, and Solutions",
+    description: "Delving into the science behind climate change and exploring ways to mitigate its impact.",
+    image: "https://images.unsplash.com/photo-1568605117036-5a0d2d0d4a94",
     category: "Featured"
   },
   {
-    title: "Sustainable Investing",
-    description: "Aligning your investments with your values and contributing to a better future.",
-    image: "https://images.unsplash.com/photo-1664575600796-ffa828c5cb6c",
+    title: "The Benefits of Meditation and Mindfulness",
+    description: "Exploring the science behind meditation and its positive effects on mental health.",
+    image: "https://images.unsplash.com/photo-1557683316-973cb9d8f6d4",
     category: "Articles"
   },
 ]
@@ -86,16 +99,18 @@ async function waitForAssetProcessing(asset, environment) {
 
 async function uploadArticles() {
   try {
-    // Get space and environment
     const space = await client.getSpace('l42vzmtmac9f')
     const environment = await space.getEnvironment('master')
 
-    // Upload each article
     for (const article of articles) {
       try {
         console.log(`Processing article: ${article.title}`)
 
-        // First, create the asset
+        // Validate image URL before proceeding
+        const isImageValid = await validateImage(article.image)
+        const imageUrl = isImageValid ? article.image : FALLBACK_IMAGE
+
+        // Create the asset with validated image
         const asset = await environment.createAsset({
           fields: {
             title: {
@@ -104,8 +119,8 @@ async function uploadArticles() {
             file: {
               'en-US': {
                 contentType: 'image/jpeg',
-                fileName: `${article.title.toLowerCase().replace(/\s+/g, '-')}.jpg`,
-                upload: article.image
+                fileName: `${article.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.jpg`,
+                upload: imageUrl
               }
             }
           }
@@ -152,10 +167,8 @@ async function uploadArticles() {
         console.log(`✅ Published article: ${article.title}`)
       } catch (error) {
         console.error(`❌ Error with article "${article.title}":`, error.message)
-        // Log full error details for debugging
-        if (error.details) {
-          console.error('Error details:', JSON.stringify(error.details, null, 2))
-        }
+        // Continue with next article instead of stopping the entire process
+        continue
       }
     }
 

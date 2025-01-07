@@ -29,7 +29,7 @@ function Header() {
                 <NavLink path="/about" label="About"/>
                 <NavLink path="/contact" label="Contact"/>
                 <NavLink path="/careers" label="Careers"/>
-                <NavLink path="/blog" label="Blog"/>
+                <NavLink path="/articles" label="Articles"/>
             </ul>
         </nav>
        
@@ -37,7 +37,7 @@ function Header() {
    </div>
    <nav className={`md:hidden ${menuOpen ? 'block' : 'hidden'} transition-all duration-300 ease-in-out absolute top-0 left-0 w-full bg-white  backdrop-blur-sm p-4 ${menuOpen ? 'top-16' : '-top-20'} z-20`}>
             <ul className={`flex flex-col gap-4 items-center w-full ${menuOpen ? 'opacity-100' : 'opacity-0'}`}>
-                <NavLink path="/blog" label="Blog"/>
+                <NavLink path="/articles" label="Articles"/>
                 <NavLink path="/careers" label="Careers"/>
                 <NavLink path="/contact" label="Contact"/>
                 <NavLink path="/about" label="About"/>
