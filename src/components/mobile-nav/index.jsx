@@ -11,7 +11,7 @@ function MobileNav() {
   const isActive = (path) => router.pathname === path
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 md:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 md:hidden z-30">
       {/* Glassmorphism effect container */}
       <div className="backdrop-blur-md bg-white/70 border-t border-gray-200 shadow-lg">
         <div className="container mx-auto px-4">
