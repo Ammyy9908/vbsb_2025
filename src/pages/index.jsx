@@ -24,11 +24,11 @@ const geistMono = Geist_Mono({
 
 export default function Home() {
   const [articles, setArticles] = useState([])
-  useEffect(() => {
-    getArticles().then((articles) => setArticles(articles))
-  }, [])
+  // useEffect(() => {
+  //   getArticles().then((articles) => setArticles(articles))
+  // }, [])
 
-  console.log(articles)
+  // console.log(articles)
   return (
     <main>
       <Header/>
