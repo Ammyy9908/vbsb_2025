@@ -18,7 +18,7 @@ const getContentfulClient = () => {
   })
 }
 
-export const getArticles = async () => {
+export const getServices = async () => {
   try {
     const client = getContentfulClient()
     
@@ -28,16 +28,16 @@ export const getArticles = async () => {
     }
 
     const response = await client.getEntries({
-      content_type: 'vbsbArtciles',
+      content_type: 'vbsbServices',
       include: 2,
     })
 
     return response.items.map(item => ({
       id: item.sys.id,
-      title: item.fields.articleTitle,
-      description: item.fields.caption,
-      image: item.fields.media?.fields?.file?.url 
-        ? `https:${item.fields.media.fields.file.url}`
+      title: item.fields.title,
+      description: item.fields.description.content[0].content[0].value,
+      image: item.fields.thumbnail?.fields?.file?.url 
+        ? `https:${item.fields.thumbnail.fields.file.url}`
         : '/fallback-image.jpg',
       readTime: '4',
       date: new Date(item.sys.createdAt).toLocaleDateString('en-GB', {
@@ -48,12 +48,12 @@ export const getArticles = async () => {
       category: item.fields.category || 'Article',
     }))
   } catch (error) {
-    console.error('Error fetching articles:', error)
+    console.error('Error fetching services:', error)
     return []
   }
 }
 
-export const getArticle = async (id) => {
+export const getService = async (id) => {
   try {
     const client = getContentfulClient()
     
@@ -66,12 +66,14 @@ export const getArticle = async (id) => {
       include: 2,
     })
 
+    console.log(response)
+
     return {
       id: response.sys.id,
-      title: response.fields.articleTitle,
-      description: response.fields.caption,
-      image: response.fields.media?.fields?.file?.url 
-        ? `https:${response.fields.media.fields.file.url}`
+      title: response.fields.title,
+      description: response.fields.description.content[0].content[0].value,
+      image: response.fields.thumbnail?.fields?.file?.url 
+        ? `https:${response.fields.thumbnail.fields.file.url}`
         : '/fallback-image.jpg',
       readTime: '4',
       date: new Date(response.sys.createdAt).toLocaleDateString('en-GB', {
@@ -80,6 +82,7 @@ export const getArticle = async (id) => {
         year: 'numeric'
       }).toUpperCase(),
       category: response.fields.category || 'Article',
+      meta: response.fields.meta,
     }
   } catch (error) {
     console.error('Error fetching article:', error)

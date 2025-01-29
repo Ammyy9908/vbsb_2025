@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import ArticleCard from '../article-card'
 import TabNavigation from '../tab-navigation'
-import { getArticles } from '@/services/contentful'
+import { getServices } from '@/services/contentful'
 
 function SkeletonCard() {
   return (
@@ -42,10 +42,10 @@ function SkeletonCard() {
 }
 
 function NewsSection() {
-  const [articles, setArticles] = useState([])
+  const [services, setServices] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [activeTab, setActiveTab] = useState('Featured')
+  const [activeTab, setActiveTab] = useState('Taxation and Compliances')
   const [fetchedData, setFetchedData] = useState(false)
 
   useEffect(() => {
@@ -53,18 +53,18 @@ function NewsSection() {
       const fetchArticles = async () => {
         try {
           setLoading(true)
-          const fetchedArticles = await getArticles()
-          if (!fetchedArticles || fetchedArticles.length === 0) {
-            setError('No articles found')
+          const fetchedServices = await getServices()
+          if (!fetchedServices || fetchedServices.length === 0) {
+            setError('No services found')
             return
           }
           
           setTimeout(() => {
-            setArticles(fetchedArticles)
+            setServices(fetchedServices)
             setLoading(false)
           }, 1000)
         } catch (err) {
-          setError(err.message || 'Error loading articles')
+          setError(err.message || 'Error loading services')
           setLoading(false)
         } finally {
           setFetchedData(true)
@@ -75,9 +75,11 @@ function NewsSection() {
     }
   }, [fetchedData])
 
-  const filteredArticles = articles.filter(article => {
-    if (activeTab === 'Featured') return true
-    return article.category === activeTab
+  console.log(services)
+
+  const filteredServices = services.filter(service => {
+    if (activeTab === 'Taxation and Compliances') return true
+    return service.category === activeTab
   })
 
   if (error) {
@@ -97,7 +99,7 @@ function NewsSection() {
       <div className="container mx-auto max-w-7xl">
         {/* Section Header with Tabs */}
         <div className="mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">News</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Services</h2>
           <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
 
@@ -110,10 +112,10 @@ function NewsSection() {
             ))
           ) : (
             // Show actual articles when loaded
-            filteredArticles.map((article) => (
+            filteredServices.map((service) => (
               <ArticleCard
-                key={article.id}
-                {...article}
+                key={service.id}
+                {...service}
               />
             ))
           )}
@@ -122,7 +124,7 @@ function NewsSection() {
         {/* View All Link */}
         <div className="mt-8 text-right">
           <Link 
-            href="/articles"
+            href="/services"
             className="text-red-600 hover:text-red-700 inline-flex items-center gap-2"
           >
             View all

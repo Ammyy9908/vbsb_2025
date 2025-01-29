@@ -4,8 +4,9 @@ import Image from 'next/image'
 import BookmarkButton from '../BookmarkButton'
 
 function ArticleCard({ id, title, description, image, readTime, date, category }) {
+  console.log(id, title, description, image, readTime, date, category)
   return (
-    <Link href={`/articles/${id}`} className="block group">
+    <Link href={`/services/${id}`} className="block group">
       <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
         {/* Image Container */}
         <div className="relative h-[240px] w-full overflow-hidden">
@@ -15,10 +16,10 @@ function ArticleCard({ id, title, description, image, readTime, date, category }
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
           />
-          <BookmarkButton 
+          {/* <BookmarkButton 
             articleId={id} 
             className="absolute top-4 right-4"
-          />
+          /> */}
         </div>
 
         {/* Content */}
@@ -39,11 +40,11 @@ function ArticleCard({ id, title, description, image, readTime, date, category }
           </p>
 
           {/* Meta Information */}
-          <div className="flex items-center text-sm text-gray-500">
+          {/* <div className="flex items-center text-sm text-gray-500">
             <span>{readTime} min read</span>
             <span className="mx-2">|</span>
             <span>{date}</span>
-          </div>
+          </div> */}
         </div>
       </div>
     </Link>

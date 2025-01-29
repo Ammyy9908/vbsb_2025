@@ -3,6 +3,12 @@ import Head from 'next/head'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 import MobileNav from '@/components/mobile-nav'
+import SEO from '@/components/seo'
+import { Inter } from 'next/font/google'
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -31,16 +37,8 @@ const ContactPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Contact Us | VBSB Digital Solutions</title>
-        <meta 
-          name="description" 
-          content="Get in touch with VBSB Digital Solutions. We're here to help with your digital transformation needs."
-        />
-      </Head>
-
+      <SEO title="Contact Us | VBSB Digital Solutions" description="Get in touch with VBSB Digital Solutions. We're here to help with your digital transformation needs." />
       <Header />
-
       <div className="bg-gray-50 min-h-screen">
         <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">

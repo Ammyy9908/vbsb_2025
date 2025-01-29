@@ -15,10 +15,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-});
+
 
 export default function Home() {
   const [articles, setArticles] = useState([])
@@ -30,33 +27,49 @@ export default function Home() {
   return (
     <>
       <SEO />
-      <main className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <main className={`${inter.className}`}>
         <Header/>
         <Main/>
         <section className="w-full flex justify-center items-center py-16">
           <div className="w-[90%] md:w-[75%] mx-auto flex flex-wrap justify-center items-center gap-8">
             <div className="flex flex-col justify-center items-center">
               <h4 className="text-4xl md:text-5xl font-bold">
-                10,000+
+                50+
               </h4>
               <p>
-                Clients
+              Years of Experience
               </p>
             </div>
             <div className="flex flex-col justify-center items-center">
               <h4 className="text-4xl md:text-5xl font-bold">
-                10,000+
+                100+
               </h4>
               <p>
-                Clients
+              Services we offer
               </p>
             </div>
             <div className="flex flex-col justify-center items-center">
               <h4 className="text-4xl md:text-5xl font-bold">
-                10,000+
+                5+
               </h4>
               <p>
-                Clients
+              Countries Operations
+              </p>
+            </div>
+            <div className="flex flex-col justify-center items-center">
+              <h4 className="text-4xl md:text-5xl font-bold">
+                100+
+              </h4>
+              <p>
+              Professionals
+              </p>
+            </div>
+            <div className="flex flex-col justify-center items-center">
+              <h4 className="text-4xl md:text-5xl font-bold">
+                1000+
+              </h4>
+              <p>
+              Happy Clients
               </p>
             </div>
           </div>

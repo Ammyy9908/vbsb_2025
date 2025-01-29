@@ -2,12 +2,10 @@ import React from 'react'
 
 function TabNavigation({ activeTab, onTabChange }) {
   const tabs = [
-    'Featured',
-    'Articles',
-    'Case Study',
-    'Thought leadership',
-    'Newsletters',
-    'Podcast'
+    'Taxation and Compliances',
+    'Audit And Assurances',
+    'Project Finance',
+    'Project Setu - Incollaboration with Ideafirst Consulting',
   ]
 
   return (

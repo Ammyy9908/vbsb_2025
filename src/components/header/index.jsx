@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 function NavLink({path, label}) {
     return (
-        <li className='text-lg font-medium text-[#4F2D7F]'>
+        <li className='text-lg font-medium text-[#4F2D7F] cursor-pointer'>
             <Link href={path} className='inline-block py-2 px-4 rounded-lg bg-white bg-opacity-50 backdrop-blur-sm hover:bg-purple-600 hover:text-white transition-colors duration-200'>{label}</Link>
         </li>
     )
@@ -30,7 +30,7 @@ function Header() {
                 <NavLink path="/about" label="About"/>
                 <NavLink path="/contact" label="Contact"/>
                 <NavLink path="/careers" label="Careers"/>
-                <NavLink path="/articles" label="Articles"/>
+                <NavLink path="/services" label="Services"/>
             </ul>
         </nav>
        

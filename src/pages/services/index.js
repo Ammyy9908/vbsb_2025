@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getArticles } from '@/services/contentful'
+import { getServices } from '@/services/contentful'
 import ArticleCard from '@/components/article-card'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
@@ -9,7 +9,7 @@ import MobileNav from '@/components/mobile-nav'
 
 const ARTICLES_PER_PAGE = 9
 
-function ArticlesPageSkeleton() {
+function ServicesPageSkeleton() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {[...Array(9)].map((_, index) => (
@@ -37,71 +37,71 @@ function ArticlesPageSkeleton() {
   )
 }
 
-export default function ArticlesPage() {
-  const [articles, setArticles] = useState([])
+export default function ServicesPage() {
+  const [services, setServices] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [activeTab, setActiveTab] = useState('Featured')
+  const [activeTab, setActiveTab] = useState('Taxation and Compliances')
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
   const [loadingMore, setLoadingMore] = useState(false)
 
   useEffect(() => {
-    const fetchInitialArticles = async () => {
+    const fetchInitialServices = async () => {
       try {
         setLoading(true)
-        const fetchedArticles = await getArticles()
-        if (!fetchedArticles || fetchedArticles.length === 0) {
-          setError('No articles found')
+        const fetchedServices = await getServices()
+        if (!fetchedServices || fetchedServices.length === 0) {
+          setError('No services found')
           return
         }
-        setArticles(fetchedArticles.slice(0, ARTICLES_PER_PAGE))
-        setHasMore(fetchedArticles.length > ARTICLES_PER_PAGE)
+        setServices(fetchedServices.slice(0, ARTICLES_PER_PAGE))
+        setHasMore(fetchedServices.length > ARTICLES_PER_PAGE)
       } catch (err) {
-        setError(err.message || 'Error loading articles')
+        setError(err.message || 'Error loading services')
       } finally {
         setLoading(false)
       }
     }
 
-    fetchInitialArticles()
+    fetchInitialServices()
   }, [])
 
   const loadMore = async () => {
     try {
       setLoadingMore(true)
-      const fetchedArticles = await getArticles()
-      const nextArticles = fetchedArticles.slice(
+      const fetchedServices = await getServices()
+      const nextServices = fetchedServices.slice(
         page * ARTICLES_PER_PAGE,
         (page + 1) * ARTICLES_PER_PAGE
       )
       
-      if (nextArticles.length === 0) {
+      if (nextServices.length === 0) {
         setHasMore(false)
         return
       }
 
-      setArticles(prev => [...prev, ...nextArticles])
+      setServices(prev => [...prev, ...nextServices])
       setPage(prev => prev + 1)
-      setHasMore(fetchedArticles.length > (page + 1) * ARTICLES_PER_PAGE)
+      setHasMore(fetchedServices.length > (page + 1) * ARTICLES_PER_PAGE)
     } catch (err) {
-      console.error('Error loading more articles:', err)
+      console.error('Error loading more services:', err)
     } finally {
       setLoadingMore(false)
     }
   }
 
   // Filter articles based on active tab
-  const filteredArticles = articles.filter(article => {
-    if (activeTab === 'Featured') return true
-    return article.category === activeTab
+  const filteredServices = services.filter(service => {
+    if (activeTab === 'Taxation and Compliances (Head)') return true
+    return service.category === activeTab
   })
 
   return (
     <>
       <SEO 
-        title="Articles | VBSB"
-        description="Explore our latest articles, insights, and industry updates."
+        title="Services | VBSB"
+        description="Explore our latest services, insights, and industry updates."
       />
       <div className="min-h-screen bg-gray-50">
         <Header />
@@ -111,10 +111,10 @@ export default function ArticlesPage() {
             {/* Page Header */}
             <div className="mb-12">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                Articles & Insights
+                Our Services
               </h1>
               <p className="text-lg text-gray-600">
-                Explore our latest articles, industry insights, and expert analysis.
+                Explore our latest services, industry insights, and expert analysis.
               </p>
             </div>
 
@@ -125,14 +125,14 @@ export default function ArticlesPage() {
 
             {/* Articles Grid */}
             {loading ? (
-              <ArticlesPageSkeleton />
+              <ServicesPageSkeleton />
             ) : error ? (
               <div className="text-center text-gray-600 py-12">{error}</div>
             ) : (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredArticles.map((article) => (
-                    <ArticleCard key={article.id} {...article} />
+                  {filteredServices.map((service) => (
+                    <ArticleCard key={service.id} {...service} />
                   ))}
                 </div>
 
@@ -153,10 +153,10 @@ export default function ArticlesPage() {
             )}
           </div>
         </main>
-
+        <MobileNav />
         <Footer />
 
-        <MobileNav />
+       
       </div>
     </>
   )

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { getArticle } from '@/services/contentful'
+import { getService } from '@/services/contentful'
 import Image from 'next/image'
 import Link from 'next/link'
 import Header from '@/components/header'
@@ -36,23 +36,23 @@ function ArticleDetailSkeleton() {
 
 export default function ArticleDetail() {
   const router = useRouter()
-  const { 'article-id': articleId } = router.query
-  const [article, setArticle] = useState(null)
+  const { 'service-id': serviceId } = router.query
+  const [service, setService] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    async function fetchArticle() {
-      if (!articleId) return
+    async function fetchService() {
+      if (!serviceId) return
 
       try {
         setLoading(true)
-        const articleData = await getArticle(articleId)
-        if (!articleData) {
-          setError('Article not found')
+        const serviceData = await getService(serviceId)
+        if (!serviceData) {
+          setError('Service not found')
           return
         }
-        setArticle(articleData)
+        setService(serviceData)
       } catch (err) {
         setError(err.message || 'Error loading article')
       } finally {
@@ -60,8 +60,8 @@ export default function ArticleDetail() {
       }
     }
 
-    fetchArticle()
-  }, [articleId])
+    fetchService()
+  }, [serviceId])
 
   if (loading) {
     return <ArticleDetailSkeleton />
@@ -97,17 +97,19 @@ export default function ArticleDetail() {
     )
   }
 
-  if (!article) return null
+  if (!service) return null
+
+  console.log(service)
 
   return (
     <>
       <SEO 
-        title={`${article.title} | VBSB`}
-        description={article.description}
-        image={article.image}
+        title={`${service.title} | VBSB`}
+        description={service.description}
+        image={service.image}
         type="article"
       >
-        <ArticleJsonLd article={article} />
+        <ArticleJsonLd article={service} />
       </SEO>
       <div className="min-h-screen bg-gray-50">
         <Header />
@@ -115,20 +117,21 @@ export default function ArticleDetail() {
         <header className="bg-white border-b relative">
           <div className="container mx-auto px-4 py-8">
             <div className="flex items-center justify-between mb-4">
-              <h1 className="text-4xl font-bold">{article.title}</h1>
-              <BookmarkButton articleId={article.id} />
-            </div>
-            <div className="max-w-4xl mx-auto">
+              <h1 className="text-4xl font-bold">{service.title}</h1>
+              {/* <BookmarkButton serviceId={service.id} /> */}
               <div className="mb-6">
                 <span className="inline-block bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-medium">
-                  {article.category}
+                  {service.category}
                 </span>
               </div>
-              <div className="flex items-center text-gray-600 text-sm">
-                <span>{article.date}</span>
+            </div>
+            <div className="max-w-4xl mx-auto">
+              
+              {/* <div className="flex items-center text-gray-600 text-sm">
+                <span>{service.date}</span>
                 <span className="mx-2">•</span>
-                <span>{article.readTime} min read</span>
-              </div>
+                <span>{service.readTime} min read</span>
+              </div> */}
             </div>
           </div>
         </header>
@@ -140,8 +143,8 @@ export default function ArticleDetail() {
               {/* Featured Image */}
               <div className="relative w-full h-[400px] mb-8 rounded-lg overflow-hidden">
                 <Image
-                  src={article.image}
-                  alt={article.title}
+                  src={service.image}
+                  alt={service.title}
                   fill
                   className="object-cover"
                   priority
@@ -151,7 +154,28 @@ export default function ArticleDetail() {
               {/* Article Description */}
               <div className="prose max-w-none">
                 <p className="text-lg text-gray-700 leading-relaxed">
-                  {article.description}
+                  {service.description}
+                </p>
+              </div>
+
+              <div className="mt-12 prose max-w-none">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">How we can help you</h3>
+
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  {service.meta.items.map((item,i) => (
+                    <li key={i}>
+                      <span className="font-bold">{item.title}</span><br/>
+                      <span className="text-gray-700">{item.description}</span>
+                      <h4 className="text-lg font-bold text-gray-900 mt-4">It Includes</h4>
+                      <ul className="list-disc list-inside text-gray-700">
+                        {item.includes.map((include,i) => (
+                          <li key={i}>
+                            <span className="font-bold">{include}</span><br/>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  ))}
                 </p>
               </div>
 
@@ -174,7 +198,7 @@ export default function ArticleDetail() {
                       d="M9 5l7 7-7 7"
                     />
                   </svg>
-                  Back to Articles
+                  Back to Services
                 </Link>
               </div>
             </div>
